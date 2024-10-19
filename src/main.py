@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",
-    title='MDLIV',
+    title='Gazpromik',
     version="1.0",
     middleware=[
         Middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
