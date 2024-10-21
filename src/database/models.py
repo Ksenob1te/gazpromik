@@ -246,7 +246,7 @@ class AnswerText(Base):
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     answer_id: Mapped[UUID] = mapped_column(ForeignKey("answer_table.id"))
     answer: Mapped[Answer] = relationship(lazy='selectin')
-    ethanol_answer: Mapped[str]
+    ethalon_answer: Mapped[str]
     title: Mapped[str]
 
     def __repr__(self) -> str:

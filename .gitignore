@@ -1,5 +1,5 @@
 .idea/
 secret.txt
 .venv
-/alembic/
 /alembic.ini
+/alembic
