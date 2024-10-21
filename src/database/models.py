@@ -21,6 +21,7 @@ class User(Base):
     __tablename__ = "user_table"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    email: Mapped[str]
     first_name: Mapped[str]
     second_name: Mapped[str]
     password: Mapped[str | None]
@@ -130,6 +131,7 @@ class Block(Base):
 
     def __repr__(self) -> str:
         return f"Block(id={self.id!r}, course_page={self.course_page_id!r}, title={self.title!r}"
+
 
 class Element(Base):
     __tablename__ = "element_table"

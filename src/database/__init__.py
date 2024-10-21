@@ -3,3 +3,4 @@ from .engine import Base
 from .models import (User, Company, UserAccess, UserCourse, Course, CoursePage, Image, Answer, AnswerText, AnswerSelect,
                      Text, Audio, Video, PrerequisiteAccess, Element, Payments, Question, Block, Splitter)
 
+from .repository import *
