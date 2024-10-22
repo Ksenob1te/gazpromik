@@ -20,3 +20,19 @@
 
 **Команда запуска**   
 ```$ python start.py```  
+
+## Отладка сервера  
+Для отладки и тестирования всего функционала можно заходить на ```http://127.0.0.1:8080/api/docs```, где в доступной форме можно посылать запросы на сервер и получать ответы.  
+
+
+# Используемые технологии  
+## FastAPI  
+![image](https://github.com/user-attachments/assets/3cd2fa03-d28b-41fb-9e73-b59b5cb25401)  
+> Для Бэкенда.
+> Потому что fast и потому что API
+## SQLalchemy  
+![image](https://github.com/user-attachments/assets/8ed7b10a-dfaf-4db5-87ed-b2a2049112e7)  
+> Для работы с базой данных  
+## Llama cpp  
+![image](https://github.com/user-attachments/assets/a7de8ff9-b0b0-4d32-80e1-7400f2a4bba9)  
+> Для работы с LLM  
