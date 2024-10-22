@@ -5,9 +5,9 @@ from database import sessionmanager
 from src.database import User
 from src.database import UserRepository
 from sqlalchemy.ext.asyncio import AsyncSession
-# TODO: install fastapi_login
-# from fastapi_login.exceptions import InvalidCredentialsException
+from fastapi_login.exceptions import InvalidCredentialsException
 from starlette.status import HTTP_400_BAD_REQUEST
+from uuid import UUID
 
 
 class UserService:
@@ -25,9 +25,7 @@ class UserService:
         """
         user_field = await self.user_repository.get_by_auth(email=email, password=password)
         if user_field is None:
-            # TODO: here change the exception after fastapi_login installation
-            # raise InvalidCredentialsException
-            raise Exception("InvalidCredentials")
+            raise InvalidCredentialsException
         return user_field
 
     @staticmethod
@@ -66,5 +64,8 @@ class UserService:
     async def set_second_name(self, user_field: User, new_second_name: str) -> None:
         if not await self.user_repository.set_second_name(user_field, new_second_name):
             raise HTTPException(HTTP_400_BAD_REQUEST, "Unable to set user's second name")
+
+    async def get_by_id(self, id: UUID) -> User:
+        return await self.user_repository.get_by_id(id)
 
 

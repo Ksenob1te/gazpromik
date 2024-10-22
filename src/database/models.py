@@ -22,8 +22,8 @@ class User(Base):
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     email: Mapped[str]
-    first_name: Mapped[str]
-    second_name: Mapped[str]
+    first_name: Mapped[str] = mapped_column(nullable=True)
+    second_name: Mapped[str] = mapped_column(nullable=True)
     password: Mapped[str | None]
     secret: Mapped[str | None]
     companies: Mapped[List["Company"]] = relationship(secondary=company_user_table, back_populates="users", lazy='selectin')
@@ -51,7 +51,7 @@ class Course(Base):
     description: Mapped[str]
     price: Mapped[int] = mapped_column(default=10000)
     company_id: Mapped[int] = mapped_column(ForeignKey("company_table.id"))
-    company: Mapped[Company] = relationship("Company", back_populates="courses")
+    company: Mapped["Company"] = relationship(lazy='selectin')
 
     def __repr__(self) -> str:
         return f"Course(id={self.id!r}, name={self.name!r}, description={self.description!r})"
@@ -83,8 +83,8 @@ class PrerequisiteAccess(Base):
     course_id: Mapped[UUID] = mapped_column(ForeignKey("course_table.id"))
     prerequisite_id: Mapped[UUID] = mapped_column(ForeignKey("course_table.id"))
 
-    course: Mapped[Course] = relationship(lazy='selectin')
-    prerequisite: Mapped[Course] = relationship(lazy='selectin')
+    course: Mapped[Course] = relationship(lazy='selectin', foreign_keys="PrerequisiteAccess.course_id")
+    prerequisite: Mapped[Course] = relationship(lazy='selectin', foreign_keys="PrerequisiteAccess.prerequisite_id")
 
     free_threshold: Mapped[int] = mapped_column(default=0)
 
@@ -99,8 +99,8 @@ class UserAccess(Base):
     user_id: Mapped[UUID] = mapped_column(ForeignKey("user_table.id"))
     course_id: Mapped[UUID] = mapped_column(ForeignKey("course_table.id"))
 
-    user: Mapped[User] = relationship(lazy='selectin')
-    course: Mapped[Course] = relationship(lazy='selectin')
+    user: Mapped[User] = relationship(lazy='selectin', foreign_keys="UserAccess.user_id")
+    course: Mapped[Course] = relationship(lazy='selectin', foreign_keys="UserAccess.course_id")
 
     is_free: Mapped[bool] = mapped_column(default=False)
 
@@ -260,9 +260,9 @@ class Payments(Base):
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     user_id: Mapped[UUID] = mapped_column(ForeignKey("user_table.id"))
-    user: Mapped[User] = relationship(lazy='selectin')
+    user: Mapped[User] = relationship(lazy='selectin', foreign_keys="Payments.user_id")
     course_id: Mapped[UUID] = mapped_column(ForeignKey("course_table.id"))
-    course: Mapped[Course] = relationship(lazy='selectin')
+    course: Mapped[Course] = relationship(lazy='selectin', foreign_keys="Payments.course_id")
     payment_date = Column(DateTime, default=datetime.datetime.utcnow)
 
     def __repr__(self) -> str:

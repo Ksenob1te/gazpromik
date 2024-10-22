@@ -4,9 +4,8 @@ from sqlalchemy import select
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import sessionmanager
-# TODO: install werkzeug
-# from werkzeug.security import check_password_hash, generate_password_hash
+from src.database import sessionmanager
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from src.database import User
 
@@ -32,9 +31,7 @@ class UserRepository:
         old_password = user_field.password
         if old_password is None:
             old_password = ""
-        # TODO: check password hash
-        # return check_password_hash(old_password, password)
-        return True
+        return check_password_hash(old_password, password)
 
     async def get_by_auth(self, email: str, password: str) -> User | None:
         user_field = await self.get_by_email(email)
@@ -61,9 +58,7 @@ class UserRepository:
         return True
 
     async def set_password(self, user_field: User, new_password: str) -> None:
-        # TODO: generate password hash here
-        # user_field.password = generate_password_hash(new_password)
-        user_field.password = new_password
+        user_field.password = generate_password_hash(new_password)
         user_field.secret = secrets.token_urlsafe(8)
         await self.session.flush()
 

@@ -1,10 +1,12 @@
 from pydantic import BaseModel
+from uuid import UUID
+
 
 class UserScheme(BaseModel):
-    id: int
-    first_name: str
-    second_name: str
-
+    id: UUID
+    email: str
+    first_name: str | None
+    second_name: str | None
 
     class Config:
         orm_mode = True

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware import Middleware
 from starlette.status import HTTP_401_UNAUTHORIZED
 
-# from .backend import router
+from .backend import router
 from .database import create_db_and_tables, sessionmanager
 from src.exceptions import NotAuthenticatedException
 
@@ -17,17 +17,19 @@ async def lifespan(app: FastAPI):
     if sessionmanager._engine is not None:
         await sessionmanager.close()
 
+
 app = FastAPI(
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",
-    title='Gazpromik',
+    title='gazpromik',
     version="1.0",
     middleware=[
         Middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
     ],
     lifespan=lifespan)
 
-# app.include_router(router)
+
+app.include_router(router)
 
 
 @app.exception_handler(NotAuthenticatedException)

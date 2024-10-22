@@ -10,7 +10,7 @@ from src.enviroments import SECRET_KEY
 from uuid import UUID
 
 manager = LoginManager(SECRET_KEY, token_url='/api/auth/login',
-                       use_cookie=True, custom_exception=NotAuthenticatedException)
+                       use_cookie=True, not_authenticated_exception=NotAuthenticatedException)
 
 
 # TODO: stopped here
